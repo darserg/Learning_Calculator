@@ -53,7 +53,6 @@ struct CalculatorView: View {
     @State var value = "0"
     @State var runningNumber = 0
     @State var runningDouble = 0.0
-    @State var doublePressed = false
     @State var currentOperation: Operataion = .none
     
     let buttons : [[calcButton]] = [
@@ -110,7 +109,6 @@ struct CalculatorView: View {
         switch button{
         case .add, .subtract, .multiply, .divide, .equal:
             //Ariphmethic operations
-            if doublePressed == false{
                 if button == .add{
                     self.currentOperation = .add
                     self.runningNumber = Int(self.value) ?? 0
@@ -142,46 +140,6 @@ struct CalculatorView: View {
                     case .none:
                         break
                     }
-                }
-                
-                //Operations with double
-                else{
-                    if button == .add{
-                        self.currentOperation = .add
-                        self.runningDouble = Double(self.value) ?? 0.0
-                    }
-                    else if button == .subtract{
-                        self.currentOperation = .subtract
-                        self.runningDouble = Double(self.value) ?? 0.0
-                    }
-                    else if button == .multiply{
-                        self.currentOperation = .multiply
-                        self.runningDouble = Double(self.value) ?? 0.0
-                    }
-                    else if button == .divide{
-                        self.currentOperation = .divide
-                        self.runningDouble = Double(self.value) ?? 0.0
-                    }
-                    else if button == .equal{
-                        let runningValueD = Double(self.runningDouble)
-                        let currentDouble = Double(self.value) ?? 0.0
-                        switch self.currentOperation{
-                        case .subtract:
-                            self.value = "\(runningValueD - currentDouble)"
-                        case .multiply:
-                            self.value = "\(runningValueD * currentDouble)"
-                        case .divide:
-                            self.value = "\(runningValueD / currentDouble)"
-                        case .add:
-                            self.value = "\(runningValueD + currentDouble)"
-                        case .none:
-                            break
-                        }
-                    }
-                    if button != .equal{
-                        self.value = "0"
-                    }
-                }
                 
                 if button != .equal{
                     self.value = "0"
@@ -189,14 +147,12 @@ struct CalculatorView: View {
             }
         case .clear:
             self.value = "0"
-            doublePressed = false
         case .decimal, .negative, .percent:
             if button == .negative{
                 self.value = "\((Int(value) ?? 0) * -1)"
             }
             else if button == .decimal{
-                self.value += "."
-                doublePressed = true
+                break
             }else{
                 break
             }
