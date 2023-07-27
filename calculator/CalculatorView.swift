@@ -48,7 +48,7 @@ enum Operataion {
     case none
 }
 
-struct ContentView: View {
+struct CalculatorView: View {
     
     @State var value = "0"
     @State var runningNumber = 0
@@ -226,7 +226,7 @@ struct ContentView: View {
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView()
+            CalculatorView()
         }
     }
 
