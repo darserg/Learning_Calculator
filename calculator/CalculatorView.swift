@@ -24,15 +24,15 @@ enum calcButton : String{
     case divide = "÷"
     case equal = "="
     case clear = "AC"
-    //case decimal = ","
-    //case percent = "%"
+    case decimal = ","
+    case percent = "%"
     case negative = "+/-"
     
     var buttonColor: Color{
         switch self{
         case .divide, .multiply, .subtract, .add, .equal:
             return .orange
-        case .clear, .negative:
+        case .clear, .negative, .percent:
             return Color(.lightGray)
         default:
             return Color(UIColor(red: 55/255.0, green: 55/255.0, blue: 55/255.0, alpha: 1))
@@ -53,14 +53,15 @@ struct CalculatorView: View {
     @State var value = "0"
     @State var runningNumber = 0
     @State var runningDouble = 0.0
+    @State var DoublePressed = false
     @State var currentOperation: Operataion = .none
     
     let buttons : [[calcButton]] = [
-        [.clear, .negative, .divide],
+        [.clear, .percent, .negative, .divide],
         [.seven, .eight, .nine, .multiply],
         [.four, .five, .six, .subtract],
         [.one, .two, .three, .add],
-        [.zero, .equal]
+        [.zero, .decimal, .equal]
     ]
     
     
@@ -108,39 +109,77 @@ struct CalculatorView: View {
     func didTap(button: calcButton){
         switch button{
         case .add, .subtract, .multiply, .divide, .equal:
-            //Ariphmethic operations
-            if button == .add{
-                self.currentOperation = .add
-                self.runningNumber = Int(self.value) ?? 0
-            }
-            else if button == .subtract{
-                self.currentOperation = .subtract
-                self.runningNumber = Int(self.value) ?? 0
-            }
-            else if button == .multiply{
-                self.currentOperation = .multiply
-                self.runningNumber = Int(self.value) ?? 0
-            }
-            else if button == .divide{
-                self.currentOperation = .divide
-                self.runningNumber = Int(self.value) ?? 0
-            }
-            else if button == .equal{
-                let runningValue = Int(self.runningNumber)
-                let currentValue = Int(self.value) ?? 0
-                switch self.currentOperation{
-                case .subtract:
-                    self.value = "\(runningValue - currentValue)"
-                case .multiply:
-                    self.value = "\(runningValue * currentValue)"
-                case .divide:
-                    self.value = "\(runningValue / currentValue)"
-                case .add:
-                    self.value = "\(runningValue + currentValue)"
-                case .none:
-                    break
+//            if DoublePressed == false || Double(Int(self.value) ?? 0) == Double(self.value){
+//                //Ariphmethic operations with Integers
+//                var runningValue = 0
+//                if button == .add{
+//                    self.runningNumber = Int(self.value) ?? 0
+//                }
+//                else if button == .subtract{
+//                    self.currentOperation = .subtract
+//                    self.runningNumber = Int(self.value) ?? 0
+//                }
+//                else if button == .multiply{
+//                    self.currentOperation = .multiply
+//                    self.runningNumber = Int(self.value) ?? 0
+//                }
+//                else if button == .divide{
+//                    self.currentOperation = .divide
+//                    self.runningNumber = Int(self.value) ?? 0
+//                }
+//                else if button == .equal{
+//                    let runningValue = self.runningNumber
+//                    let currentValue = Int(self.value) ?? 0
+//                    switch self.currentOperation{
+//                    case .subtract:
+//                        self.value = "\(runningValue - currentValue)"
+//                    case .multiply:
+//                        self.value = "\(runningValue * currentValue)"
+//                    case .divide:
+//                        self.value = "\(runningValue / currentValue)"
+//                    case .add:
+//                        self.value = "\(runningValue + currentValue)"
+//                    case .none:
+//                        break
+//                    }
+//                }
+//            }
+//            else{
+                //Ariphmethic operations
+                if button == .add{
+                    self.currentOperation = .add
+                    self.runningDouble = Double(self.value) ?? 0
                 }
-            }
+                else if button == .subtract{
+                    self.currentOperation = .subtract
+                    self.runningDouble = Double(self.value) ?? 0
+                }
+                else if button == .multiply{
+                    self.currentOperation = .multiply
+                    self.runningDouble = Double(self.value) ?? 0
+                    self.runningDouble = Double(self.value) ?? 0
+                }
+                else if button == .divide{
+                    self.currentOperation = .divide
+                    self.runningDouble = Double(self.value) ?? 0
+                }
+                else if button == .equal{
+                    let runningValueD = Double(self.runningDouble)
+                    let currentValueD = Double(self.value) ?? 0
+                    switch self.currentOperation{
+                    case .subtract:
+                        self.value = "\(runningValueD - currentValueD)"
+                    case .multiply:
+                        self.value = "\(runningValueD * currentValueD)"
+                    case .divide:
+                        self.value = "\(runningValueD / currentValueD)"
+                    case .add:
+                        self.value = "\(runningValueD + currentValueD)"
+                    case .none:
+                        break
+                    }
+                }
+//            }
             if button != .equal{
                 self.value = "0"
             }
@@ -148,6 +187,12 @@ struct CalculatorView: View {
             self.value = "0"
         case .negative:
             self.value = "\((Int(value) ?? 0) * -1)"
+        case .percent:
+            //let runningValue = Int(self.value)
+            break
+        case .decimal:
+            self.DoublePressed = true
+            self.value += "."
         default:
             let number = button.rawValue
             if self.value == "0"{
@@ -161,7 +206,7 @@ struct CalculatorView: View {
     }
     
     func buttonWidth(item: calcButton) -> CGFloat{
-        if item == .zero || item == .clear || item == .equal{
+        if item == .zero	{
             return (UIScreen.main.bounds.width - (5 * 12)) / 2
         }
         return (UIScreen.main.bounds.width - (5 * 12)) / 4
