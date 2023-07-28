@@ -109,42 +109,42 @@ struct CalculatorView: View {
     func didTap(button: calcButton){
         switch button{
         case .add, .subtract, .multiply, .divide, .equal:
-//            if DoublePressed == false || Double(Int(self.value) ?? 0) == Double(self.value){
-//                //Ariphmethic operations with Integers
-//                var runningValue = 0
-//                if button == .add{
-//                    self.runningNumber = Int(self.value) ?? 0
-//                }
-//                else if button == .subtract{
-//                    self.currentOperation = .subtract
-//                    self.runningNumber = Int(self.value) ?? 0
-//                }
-//                else if button == .multiply{
-//                    self.currentOperation = .multiply
-//                    self.runningNumber = Int(self.value) ?? 0
-//                }
-//                else if button == .divide{
-//                    self.currentOperation = .divide
-//                    self.runningNumber = Int(self.value) ?? 0
-//                }
-//                else if button == .equal{
-//                    let runningValue = self.runningNumber
-//                    let currentValue = Int(self.value) ?? 0
-//                    switch self.currentOperation{
-//                    case .subtract:
-//                        self.value = "\(runningValue - currentValue)"
-//                    case .multiply:
-//                        self.value = "\(runningValue * currentValue)"
-//                    case .divide:
-//                        self.value = "\(runningValue / currentValue)"
-//                    case .add:
-//                        self.value = "\(runningValue + currentValue)"
-//                    case .none:
-//                        break
-//                    }
-//                }
-//            }
-//            else{
+            if DoublePressed == false || Double(Int(self.value) ?? 0) == Double(self.value){
+                //Ariphmethic operations with Integers
+                var runningValue = 0
+                if button == .add{
+                    self.runningNumber = Int(self.value) ?? 0
+                }
+                else if button == .subtract{
+                    self.currentOperation = .subtract
+                    self.runningNumber = Int(self.value) ?? 0
+                }
+                else if button == .multiply{
+                    self.currentOperation = .multiply
+                    self.runningNumber = Int(self.value) ?? 0
+                }
+                else if button == .divide{
+                    self.currentOperation = .divide
+                    self.runningNumber = Int(self.value) ?? 0
+                }
+                else if button == .equal{
+                    let runningValue = self.runningNumber
+                    let currentValue = Int(self.value) ?? 0
+                    switch self.currentOperation{
+                    case .subtract:
+                        self.value = "\(runningValue - currentValue)"
+                    case .multiply:
+                        self.value = "\(runningValue * currentValue)"
+                    case .divide:
+                        self.value = "\(runningValue / currentValue)"
+                    case .add:
+                        self.value = "\(runningValue + currentValue)"
+                    case .none:
+                        break
+                    }
+                }
+            }
+            else{
                 //Ariphmethic operations
                 if button == .add{
                     self.currentOperation = .add
@@ -179,7 +179,7 @@ struct CalculatorView: View {
                         break
                     }
                 }
-//            }
+            }
             if button != .equal{
                 self.value = "0"
             }
@@ -188,7 +188,6 @@ struct CalculatorView: View {
         case .negative:
             self.value = "\((Int(value) ?? 0) * -1)"
         case .percent:
-            //let runningValue = Int(self.value)
             break
         case .decimal:
             self.DoublePressed = true
