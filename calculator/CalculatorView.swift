@@ -51,8 +51,7 @@ enum Operataion {
 struct CalculatorView: View {
     
     @State var value = "0"
-    @State var runningNumber = 0
-    @State var runningDouble = 0.0
+    @State var runningNumber = 0.0
     @State var DoublePressed = false
     @State var currentOperation: Operataion = .none
     
@@ -109,36 +108,35 @@ struct CalculatorView: View {
     func didTap(button: calcButton){
         switch button{
         case .add, .subtract, .multiply, .divide, .equal:
-            if DoublePressed == false || Double(Int(self.value) ?? 0) == Double(self.value){
+            if (DoublePressed == false) && (Double(Int(self.value) ?? 0) != Double(self.value)){
                 //Ariphmethic operations with Integers
-                var runningValue = 0
                 if button == .add{
-                    self.runningNumber = Int(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .subtract{
                     self.currentOperation = .subtract
-                    self.runningNumber = Int(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .multiply{
                     self.currentOperation = .multiply
-                    self.runningNumber = Int(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .divide{
                     self.currentOperation = .divide
-                    self.runningNumber = Int(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .equal{
                     let runningValue = self.runningNumber
                     let currentValue = Int(self.value) ?? 0
                     switch self.currentOperation{
                     case .subtract:
-                        self.value = "\(runningValue - currentValue)"
+                        self.value = "\(Int(runningValue) - currentValue)"
                     case .multiply:
-                        self.value = "\(runningValue * currentValue)"
+                        self.value = "\(Int(runningValue) * currentValue)"
                     case .divide:
-                        self.value = "\(runningValue / currentValue)"
+                        self.value = "\(Int(runningValue) / currentValue)"
                     case .add:
-                        self.value = "\(runningValue + currentValue)"
+                        self.value = "\(Int(runningValue) + currentValue)"
                     case .none:
                         break
                     }
@@ -148,33 +146,33 @@ struct CalculatorView: View {
                 //Ariphmethic operations
                 if button == .add{
                     self.currentOperation = .add
-                    self.runningDouble = Double(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .subtract{
                     self.currentOperation = .subtract
-                    self.runningDouble = Double(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .multiply{
                     self.currentOperation = .multiply
-                    self.runningDouble = Double(self.value) ?? 0
-                    self.runningDouble = Double(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .divide{
                     self.currentOperation = .divide
-                    self.runningDouble = Double(self.value) ?? 0
+                    self.runningNumber = Double(self.value) ?? 0
                 }
                 else if button == .equal{
-                    let runningValueD = Double(self.runningDouble)
-                    let currentValueD = Double(self.value) ?? 0
+                    let runningValue = Double(self.runningNumber)
+                    let currentValue = Double(self.value) ?? 0
                     switch self.currentOperation{
                     case .subtract:
-                        self.value = "\(runningValueD - currentValueD)"
+                        self.value = "\(runningValue - currentValue)"
                     case .multiply:
-                        self.value = "\(runningValueD * currentValueD)"
+                        self.value = "\(runningValue * currentValue)"
                     case .divide:
-                        self.value = "\(runningValueD / currentValueD)"
+                        self.value = "\(runningValue / currentValue)"
                     case .add:
-                        self.value = "\(runningValueD + currentValueD)"
+                        self.value = "\(runningValue + currentValue)"
                     case .none:
                         break
                     }
