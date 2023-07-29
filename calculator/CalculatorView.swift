@@ -208,7 +208,7 @@ struct CalculatorView: View {
             self.value = "\((Int(value) ?? 0) * -1)"
         case .percent:
             let currentPercents = Double(self.value) ?? 0
-            var currentNumber = self.runningNumber
+            let currentNumber = self.runningNumber
             
             self.value = "\(currentNumber * (currentPercents / 100.0))"
         case .decimal:
