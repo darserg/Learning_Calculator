@@ -77,7 +77,7 @@ struct CalculatorView: View {
                         Spacer()
                         Text(value)
                             .bold()
-                            .font(.system(size: 64))
+                            .font(.system(size: buttonHeight()/2))
                             .foregroundColor(.white)
                     }
                     .padding()
@@ -90,7 +90,7 @@ struct CalculatorView: View {
                                     didTap(button: item)
                                 }, label: {
                                     Text(item.rawValue)
-                                        .font(.system(size: 60))
+                                        .font(.system(size: buttonHeight()/3))
                                         .frame(width: self.buttonWidth(item: item),
                                                height: self.buttonHeight())
                                         .background(item.buttonColor)
@@ -109,46 +109,6 @@ struct CalculatorView: View {
     func didTap(button: calcButton){
         switch button{
         case .add, .subtract, .multiply, .divide, .equal:
-//            if (DoublePressed == false) && (Double(Int(self.value) ?? 0) != Double(self.value)){
-//                //Ariphmethic operations with Integers
-//                if button == .add{
-//                    self.runningNumber = Double(self.value) ?? 0
-//                }
-//                else if button == .subtract{
-//                    self.currentOperation = .subtract
-//                    self.runningNumber = Double(self.value) ?? 0
-//                }
-//                else if button == .multiply{
-//                    self.currentOperation = .multiply
-//                    self.runningNumber = Double(self.value) ?? 0
-//                }
-//                else if button == .divide{
-//                    self.currentOperation = .divide
-//                    self.runningNumber = Double(self.value) ?? 0
-//                }
-//                else if button == .equal{
-//                    let runningValue = self.runningNumber
-//                    let currentValue = Int(self.value) ?? 0
-//                    switch self.currentOperation{
-//                    case .subtract:
-//                        self.value = "\(Int(runningValue) - currentValue)"
-//                    case .multiply:
-//                        self.value = "\(Int(runningValue) * currentValue)"
-//                    case .divide:
-//                        self.value = "\(Int(runningValue) / currentValue)"
-//                    case .add:
-//                        self.value = "\(Int(runningValue) + currentValue)"
-//                    case .equal:
-//                        if Double(self.value) == Double(Int(self.value) ?? 0){
-//                            self.value = "\(Int(self.value) ?? 0)"
-//                        }
-//                        self.currentOperation = .equal
-//                    case .none:
-//                        break
-//                    }
-//                }
-////            }
-//            else{
 //                //Ariphmethic operations
                 if button == .add{
                     self.currentOperation = .add
@@ -173,22 +133,22 @@ struct CalculatorView: View {
                     switch self.currentOperation{
                     case .subtract:
                         self.value = "\(runningValue - currentValue)"
-                        if (Double(self.value)) == Double(lround(Double(self.value) ?? 0.0)){
+                        if (Double(self.value)) == round(Double(self.value) ?? 0.0){
                             self.value = "\(lround(Double(self.value) ?? 0))"
                         }
                     case .multiply:
                         self.value = "\(runningValue * currentValue)"
-                        if (Double(self.value)) == Double(lround(Double(self.value) ?? 0.0)){
+                        if (Double(self.value)) == round(Double(self.value) ?? 0.0){
                             self.value = "\(lround(Double(self.value) ?? 0))"
                         }
                     case .divide:
                         self.value = "\(runningValue / currentValue)"
-                        if (Double(self.value)) == Double(lround(Double(self.value) ?? 0.0)){
+                        if (Double(self.value)) == round(Double(self.value) ?? 0.0){
                             self.value = "\(lround(Double(self.value) ?? 0))"
                         }
                     case .add:
                         self.value = "\(runningValue + currentValue)"
-                        if (Double(self.value)) == Double(lround(Double(self.value) ?? 0.0)){
+                        if (Double(self.value)) == round(Double(self.value) ?? 0.0){
                             self.value = "\(lround(Double(self.value) ?? 0))"
                         }
                     case .equal:
@@ -198,7 +158,6 @@ struct CalculatorView: View {
                     }
                     
                 }
-//            }
             if button != .equal{
                 self.value = "0"
             }
@@ -231,14 +190,16 @@ struct CalculatorView: View {
     }
     
     func buttonWidth(item: calcButton) -> CGFloat{
-        if item == .zero	{
-            return (UIScreen.main.bounds.width - (5 * 12)) / 2
+        if item == .zero{
+            return (UIScreen.main.bounds.width - (5*12)) / 2
         }
-        return (UIScreen.main.bounds.width - (5 * 12)) / 4
+        else{
+            return (UIScreen.main.bounds.width - (5*12)) / 4
+        }
     }
     
     func buttonHeight() -> CGFloat{
-        return (UIScreen.main.bounds.width - (5 * 12)) / 4
+        return buttonWidth(item: .one)
     }
 }
     
