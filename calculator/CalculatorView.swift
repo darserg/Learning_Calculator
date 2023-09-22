@@ -198,6 +198,10 @@ struct CalculatorView: View {
         }
     }
     
+    func updateWindowSize(){
+        
+    }
+    
     func buttonHeight() -> CGFloat{
         return buttonWidth(item: .one)
     }
