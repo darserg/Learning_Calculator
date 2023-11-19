@@ -55,6 +55,7 @@ struct CalculatorView: View {
     @State var runningNumber = 0.0
     @State var DoublePressed = false
     @State var currentOperation: Operataion = .none
+    @State var DarkMode = true
     
     let buttons : [[calcButton]] = [
         [.clear, .percent, .negative, .divide],
@@ -68,7 +69,12 @@ struct CalculatorView: View {
     var body: some View {
         VStack{
             ZStack{
-                Color.black.edgesIgnoringSafeArea(.all)
+                if DarkMode{
+                    Color.black.edgesIgnoringSafeArea(.all)
+                }
+                else{
+                    Color.white.edgesIgnoringSafeArea(.all)
+                }
                 
                 VStack{
                     Spacer()
